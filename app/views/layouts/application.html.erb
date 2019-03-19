@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>SearchEngineScraper</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +12,36 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="/">Search Engine Scraper</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Scrape<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <% if current_user %>
+              <p class='text-white mt-2 ml-5'> Hello <%= current_user.email %>!  </p>
+            <% end %>
+          </li>
+        </ul>
+
+        <div class="my-2 my-lg-0">
+          <% if current_user %>
+            <span><%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'text-white' %></span>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+
+    <main role="main" class="container">
+      <div class="starter-template">
+        <%= yield %>
+      </div>
+    </main>
   </body>
 </html>
