@@ -1,5 +1,7 @@
 <div style="height:400px; width:300px;">
   Hello <%= current_user.email %>!
   <span><%= link_to "Logout", destroy_user_session_path, method: :delete %></span>
+
+  <span><%= link_to "Scrap", scrap_path, method: :post %></span>
 </div>
 
