@@ -17,9 +17,9 @@ module Scraper
       end
     end
 
-    def scrap
+    def scrap(options={})
       # options is the Scrapper specific options
-      @scraper.scrap(options={})
+      @scraper.scrap(options)
     end
   end
 end
