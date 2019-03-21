@@ -2,11 +2,14 @@ class ScraperController < ApplicationController
   before_action :authenticate_user!
 
   def scrap
-    scraper = Scraper::SearchEngineScraper.new
-    @data = scraper.scrap
-  rescue Scraper::ExtractElementError => ex
-    render json: { message: "Unable to scrap", status: :unprocessable_entity }
-  rescue StandardError
-    render json: { message: "Unable to process request", status: :internal_error }
+    begin
+      keywords = SearchResult.process_keywords_csv(params[:file])
+    rescue Scraper::ExtractElementError => ex
+      flash[:error] = "Unable to scrap"
+    rescue StandardError
+      flash[:error] = "Unable to process request"
+    end
+    redirect_to '/'
   end
+
 end

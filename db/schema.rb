@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_17_165732) do
+ActiveRecord::Schema.define(version: 2019_03_20_185429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "search_results", force: :cascade do |t|
+    t.string "keyword"
+    t.integer "user_id"
+    t.integer "number_of_adwords"
+    t.integer "number_of_links"
+    t.text "html_content"
+    t.bigint "total_search_result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["keyword"], name: "index_search_results_on_keyword"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

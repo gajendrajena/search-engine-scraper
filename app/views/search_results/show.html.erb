@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Keyword:</strong>
+  <%= @search_result.keyword %>
+</p>
+
+<p>
+  <strong>Number of adwords:</strong>
+  <%= @search_result.number_of_adwords %>
+</p>
+
+<p>
+  <strong>Number of links:</strong>
+  <%= @search_result.number_of_links %>
+</p>
+
+<p>
+  <strong>Html content:</strong>
+  <%= @search_result.html_content %>
+</p>
+
+<p>
+  <strong>Total search result:</strong>
+  <%= @search_result.total_search_result %>
+</p>
+
+<%= link_to 'Edit', edit_search_result_path(@search_result) %> |
+<%= link_to 'Back', search_results_path %>
