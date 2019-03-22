@@ -3,7 +3,8 @@ class ScraperController < ApplicationController
 
   def scrap
     begin
-      keywords = SearchResult.process_keywords_csv(params[:file])
+      SearchResult.process_keywords_csv(params[:file])
+      flash[:notice] = "Uploaded successfully"
     rescue Scraper::ExtractElementError => ex
       flash[:error] = "Unable to scrap"
     rescue StandardError

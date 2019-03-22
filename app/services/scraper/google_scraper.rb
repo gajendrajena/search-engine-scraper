@@ -50,7 +50,7 @@ module Scraper
     end
 
     # extract a specific data from html @page
-    def extract_elements(page, key, type, identifier)
+    def extract_elements(key, type, identifier)
       case type
       when 'number'
         total = @page.at_css(identifier).try(:text).try(:delete, '^0-9')
