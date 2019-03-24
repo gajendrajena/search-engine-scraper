@@ -1,5 +1,4 @@
 require 'open-uri'
-require_relative './scraper_error.rb'
 
 module Scraper
   class GoogleScraper
