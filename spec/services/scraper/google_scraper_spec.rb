@@ -2,43 +2,50 @@ require 'rails_helper'
 
 RSpec.describe Scraper, type: :service do
   describe 'scrap' do
-    it 'scraps google with default keyword when option is empty' do
-      #search happy path scenarios
-      #TODO: mock scrap for google
-      data = Scraper::GoogleScraper.new.scrap
+    #search happy path scenarios
+    context 'when keyword is valid' do
+      before do
+        @file = Nokogiri::HTML(open(file_fixture('rummycircle-GoogleSearch.html')))
+        allow_any_instance_of(Scraper::GoogleScraper).to receive(:web_search).and_return(@file)
+      end
 
-      expect(data).not_to be_empty
+      it 'scraps google with default keyword when option is empty' do
+        data = Scraper::GoogleScraper.new.scrap
 
-      expect(data).to have_key(:adwords)
-      expect(data).to have_key(:total_result)
-      expect(data).to have_key(:html)
-      expect(data).to have_key(:links)
+        expect(data).not_to be_empty
+
+        expect(data).to have_key(:adwords)
+        expect(data).to have_key(:total_result)
+        expect(data).to have_key(:html)
+        expect(data).to have_key(:links)
+      end
+
+      it 'scraps google when option is passed' do
+        data = Scraper::GoogleScraper.new.scrap({ keyword: 'rummycircle' })
+
+        expect(data).not_to be_empty
+
+        expect(data).to have_key(:adwords)
+        expect(data).to have_key(:total_result)
+        expect(data).to have_key(:html)
+        expect(data).to have_key(:links)
+      end
     end
 
-    it 'scraps google when option is passed' do
-      data = Scraper::GoogleScraper.new.scrap({ keyword: 'rummycircle' })
+    #search failure scenarios
+    # context 'when keyword is invalid' do
+    #   before do
+    #     @file = Nokogiri::HTML(open(file_fixture('invalidsearch-GoogleSearch.html')))
+    #     allow_any_instance_of(Scraper::GoogleScraper).to receive(:web_search).and_return(@file)
+    #   end
 
-      expect(data).not_to be_empty
+    #   it 'scraps google with default keyword when option is empty' do
+    #     expect(Scraper::GoogleScraper.new.scrap).to raise_error(Scraper::GoogleScraper::OutdatedError)
+    #   end
 
-      expect(data).to have_key(:adwords)
-      expect(data).to have_key(:total_result)
-      expect(data).to have_key(:html)
-      expect(data).to have_key(:links)
-    end
-
-    #TODO: search failure scenarios
-    #
-  end
-
-  describe '#parse_page' do
-  end
-
-  describe '#parse_page' do
-    before do
-    end
-
-    it 'set attributes and return scrapped data' do
-    end
-
+    #   it 'scraps google when option is passed' do
+    #     expect(Scraper::GoogleScraper.new.scrap({ keyword: 'rummycircle' })).to raise_error(ExtractElementError)
+    #   end
+    # end
   end
 end

@@ -7,7 +7,7 @@ module Scraper
 
     BASE_URL = 'https://google.com'.freeze
     DEFAULT_RELATIVE_SEARCH_URL = 'search?q='.freeze
-    DEFAULT_KEYWORD = 'nimble'
+    DEFAULT_KEYWORD = 'rummycircle'
     TRACKABLE_ATTRIBUTES = {
       total_result: {
         type: 'number',
@@ -23,20 +23,61 @@ module Scraper
       }
     }
 
+
+  class ExtractElementError < StandardError; end
+
+  class UnSupportedError < StandardError
+    attr_accessor :type
+
+    def initialize(type)
+      @type = type
+
+      super(message)
+    end
+
+    def message
+      "#{@type.capitalize} is not supported yet."
+    end
+  end
+
+  class OutdatedError < StandardError
+    attr_accessor :key, :identifier
+
+    def initialize(key, identifier)
+      @key = key
+      @identifier = identifier
+
+      super(message)
+    end
+
+    def message
+      "#{@key.capitalize} doesn't fetch any result! Review #{identifier}."
+    end
+  end
+
     def scrap(options={})
       # Build URL
       @keyword = options[:keyword] || DEFAULT_KEYWORD
       @url =  "#{BASE_URL}/#{DEFAULT_RELATIVE_SEARCH_URL}#{@keyword.split(/\s+/).join('+')}"
-      p "URL is #{@url}"
 
       # Call the URL
-      @page = Nokogiri::HTML(open(@url))
+      @page = web_search
 
       # Scan the page for trackable attributes
-      parse_page
+      scrap_data = parse_page()
+      scrap_data[:keyword] = @keyword
+      scrap_data[:user_id] = options[:user_id]
+
+      SearchResult.create_from_scrap_data(scrap_data)
+
+      scrap_data
     rescue OutdatedError, UnSupportedError
       # log(ex) Log it to any service / third party library e.g. bugsnag
       raise ExtractElementError
+    end
+
+    def web_search
+      Nokogiri::HTML(open(@url))
     end
 
     # parse html @page for extracting different data
@@ -47,6 +88,9 @@ module Scraper
         end
         attrs[:html] = @page.to_html
       end
+    rescue OutdatedError, UnSupportedError
+      # log(ex) Log it to any service / third party library e.g. bugsnag
+      raise ExtractElementError
     end
 
     # extract a specific data from html @page
@@ -69,11 +113,15 @@ module Scraper
       when 'ads'
         @page.css(identifier).map {|link| link.attr('href') }
       when 'link'
-        @page.css("a#{identifier}").map {|lnk| lnk.attributes['href'].value }
+        @page.css("a#{identifier}").map {|lnk| lnk.attributes['href'] }
       else
         raise UnSupportedError.new(type)
       end
+    rescue OutdatedError, UnSupportedError
+      # log(ex) Log it to any service / third party library e.g. bugsnag
+      raise ExtractElementError
     end
   end
 
 end
+
