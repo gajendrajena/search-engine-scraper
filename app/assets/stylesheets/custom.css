@@ -3,7 +3,6 @@ main.container{
 }
 .starter-template {
   padding: 3rem 0;
-  text-align: center;
 }
 
 #csv_upload .file {
@@ -22,6 +21,7 @@ main.container{
 
 
 .form-signin {
+  text-align: center;
   width: 100%;
   max-width: 330px;
   padding: 15px;

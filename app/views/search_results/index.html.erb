@@ -1,35 +1,31 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Search Results</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Keyword</th>
-      <th>Number of adwords</th>
-      <th>Number of links</th>
-      <th>Html content</th>
-      <th>Total search result</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @search_results.each do |search_result| %>
+<h1 class="display-4 h2">Scrape Report</h1>
+<% if @search_results.present? %>
+  <table class="table table-dark table-striped">
+    <thead>
       <tr>
-        <td><%= search_result.keyword %></td>
-        <td><%= search_result.number_of_adwords %></td>
-        <td><%= search_result.number_of_links %></td>
-        <td><%= search_result.html_content %></td>
-        <td><%= search_result.total_search_result %></td>
-        <td><%= link_to 'Show', search_result %></td>
-        <td><%= link_to 'Edit', edit_search_result_path(search_result) %></td>
-        <td><%= link_to 'Destroy', search_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Keyword</th>
+        <th>Number of adwords</th>
+        <th>Number of links</th>
+        <th>Html content</th>
+        <th>Total search result</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @search_results.each do |search_result| %>
+        <tr>
+          <td><%= search_result.keyword %></td>
+          <td><%= search_result.number_of_adwords %></td>
+          <td><%= search_result.number_of_links %></td>
+          <td><%= search_result.html_content %></td>
+          <td><%= search_result.total_search_result %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Search Result', new_search_result_path %>
+<% else %>
+  <p class="lead">No results so far</p>
+<% end %>
+
+
