@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe ScraperController, type: :controller do
   describe '#index' do
-
     context 'when user is not logged in ' do
       it 'it should redirect to login page' do
         post :scrap
@@ -22,5 +21,4 @@ RSpec.describe ScraperController, type: :controller do
       end
     end
   end
-
 end

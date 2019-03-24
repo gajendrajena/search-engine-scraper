@@ -14,8 +14,8 @@ module Scraper
         identifier: '#resultStats'
       },
       adwords: {
-        type: 'count',
-        identifier: '.ads-ad'
+        type: 'ads',
+        identifier: '.ads-ad h3 a'
       },
       links: {
         type: 'link',
@@ -66,8 +66,8 @@ module Scraper
         raise OutdatedError.new(key, identifier) if total.nil?
 
         total
-      when 'count'
-        @page.css(identifier).map {|lnk| lnk.attributes['href'].value }
+      when 'ads'
+        @page.css(identifier).map {|link| link.attr('href') }
       when 'link'
         @page.css("a#{identifier}").map {|lnk| lnk.attributes['href'].value }
       else
