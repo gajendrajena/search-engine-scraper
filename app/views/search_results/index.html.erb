@@ -6,8 +6,8 @@
         <th>Keyword</th>
         <th>Number of adwords</th>
         <th>Number of links</th>
-        <th>Html content</th>
         <th>Total search result</th>
+        <th>Html content</th>
       </tr>
     </thead>
 
@@ -17,8 +17,12 @@
           <td><%= search_result.keyword %></td>
           <td><%= search_result.number_of_adwords %></td>
           <td><%= search_result.number_of_links %></td>
-          <td><%= search_result.html_content %></td>
           <td><%= search_result.total_search_result %></td>
+          <td>
+            <div class="html-content">
+              <%= search_result.html_content %>
+            </div>
+            </td>
         </tr>
       <% end %>
     </tbody>
