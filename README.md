@@ -3,12 +3,14 @@ A google scraper to search in google
 
 Implementations
 
-## Allow users to upload a csv file of keywords to search
-## Parse the csv file to find the keywords
-## for each keyword triggering a worker to scrape
-## Worker creates an instance of the search engine scraper and scrape with the keyword
-## Sidekiq worker should try repeated search in case of search failure
-## Store the scrape results in database
+```
+  Allow users to upload a csv file of keywords to search
+  Parse the csv file to find the keywords
+  for each keyword triggering a worker to scrape
+  Worker creates an instance of the search engine scraper and scrape with the keyword
+  Sidekiq worker should try repeated search in case of search failure
+  Store the scrape results in database
+```
 
 ## Technologies
 - Frontend
