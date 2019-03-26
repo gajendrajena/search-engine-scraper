@@ -6,7 +6,6 @@ module Scraper
 
     BASE_URL = 'https://google.com'.freeze
     DEFAULT_RELATIVE_SEARCH_URL = 'search?q='.freeze
-    DEFAULT_KEYWORD = 'rummycircle'
     TRACKABLE_ATTRIBUTES = {
       total_result: {
         type: 'number',
@@ -23,6 +22,7 @@ module Scraper
     }
 
 
+  class EmptyKeywordError < StandardError; end
   class ExtractElementError < StandardError; end
 
   class UnSupportedError < StandardError
@@ -55,8 +55,10 @@ module Scraper
   end
 
     def scrap(options={})
+      @keyword = options[:keyword]
+      raise EmptyKeywordError and return if @keyword.blank?
+
       # Build URL
-      @keyword = options[:keyword] || DEFAULT_KEYWORD
       @url =  "#{BASE_URL}/#{DEFAULT_RELATIVE_SEARCH_URL}#{@keyword.split(/\s+/).join('+')}"
 
       # Call the URL
