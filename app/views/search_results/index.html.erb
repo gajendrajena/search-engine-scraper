@@ -1,35 +1,38 @@
-<h1 class="display-4 h2">Scrape Report</h1>
-<% if @search_results.present? %>
-  <table class="table table-dark table-striped">
-    <thead>
-      <tr>
-        <th>Keyword</th>
-        <th>Number of adwords</th>
-        <th>Number of links</th>
-        <th>Total search result</th>
-        <th>Html content</th>
-      </tr>
-    </thead>
+<div class="row">
+  <div class="col-12">
+    <h1 class="h2">Scrape Report</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <% if @search_results.present? %>
+      <table class="table table-striped table-mw">
+        <thead class='thead-dark'>
+          <tr>
+            <th>Keyword</th>
+            <th>Number of adwords</th>
+            <th>Number of links</th>
+            <th>Total search result</th>
+            <th>Html content</th>
+          </tr>
+        </thead>
 
-    <tbody>
-      <% @search_results.each do |search_result| %>
-        <tr>
-          <td><%= search_result.keyword %></td>
-          <td><%= search_result.number_of_adwords %></td>
-          <td><%= search_result.number_of_links %></td>
-          <td><%= search_result.total_search_result %></td>
-          <td>
-            <div class="html-content">
-              <%= search_result.html_content %>
-            </div>
-            </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+        <tbody>
+          <% @search_results.each do |search_result| %>
+            <tr>
+              <td><%= search_result.keyword %></td>
+              <td><%= search_result.number_of_adwords %></td>
+              <td><%= search_result.number_of_links %></td>
+              <td><%= search_result.total_search_result %></td>
+              <td> <div class="html-content"><%= search_result.html_content %></div> </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
 
-<% else %>
-  <p class="lead">No results so far</p>
-<% end %>
+    <% else %>
+      <p class="lead">No results so far</p>
+    <% end %>
 
-
+  </div>
+</div>
