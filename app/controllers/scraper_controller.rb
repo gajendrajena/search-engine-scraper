@@ -5,9 +5,7 @@ class ScraperController < ApplicationController
     begin
       SearchResult.process_keywords_csv(params[:file], current_user.try(:id))
       flash[:notice] = "Uploaded successfully"
-    rescue Scraper::GoogleScraper::ExtractElementError => ex
-      flash[:error] = "Unable to scrap"
-    rescue StandardError
+    rescue Exception => e
       flash[:error] = "Unable to process request"
     end
 
