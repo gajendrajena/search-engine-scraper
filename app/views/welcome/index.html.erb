@@ -31,5 +31,26 @@
       <% end %>
     </div>
   </div>
+  <hr>
 
+  <div class="row">
+    <div class="col-sm-8 col-md-6 col-lg-4 offset-md-3 offset-lg-4 offset-sm-2">
+      <h5 class='mb-4'>Sample CSV file format</h5>
+      <table class="table bg-white">
+        <thead>
+          <tr>
+            <th>Keyword</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%- ["rummycircle", "buy shoe", "buy vegitable", "buy mobile"].each do |keyword| -%>
+            <tr> <td><%= keyword %></td> </tr>
+          <%- end -%>
+        </tbody>
+      </table>
+      <div class="mt-4">
+        <%= link_to 'Download sample csv', asset_path('sample_keyword.csv'), target: '_blank', class: 'btn-link'%>
+      </div>
+    </div>
+  </div>
 </div>
