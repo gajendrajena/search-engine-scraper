@@ -5,7 +5,7 @@ class SearchResult < ApplicationRecord
   # Associations
   belongs_to :user
 
-  #process csv file for keywords
+  # process csv file for keywords
   #
   def self.process_keywords_csv(file=nil, user_id)
     keywords_status = {parsed: [], buffered: [], all: []}
@@ -22,7 +22,7 @@ class SearchResult < ApplicationRecord
     keywords_status
   end
 
-  #process a keyword from csv
+  # process a keyword from csv
   #
   def self.process_keyword(keyword='', keywords_status, user_id)
     return keywords_status if keyword.empty?
@@ -37,10 +37,11 @@ class SearchResult < ApplicationRecord
     end
   end
 
-
+  # create search result from srcap data
+  #
   def self.create_from_scrap_data(scrap_data)
     html = scrap_data[:html].force_encoding("UTF-8") if scrap_data[:html]
-    search_result = create({
+    create({
       keyword:              scrap_data[:keyword],
       number_of_adwords:    scrap_data[:adwords].try(:length).to_i,
       number_of_links:      scrap_data[:links].try(:length).to_i,
@@ -48,8 +49,5 @@ class SearchResult < ApplicationRecord
       total_search_result:  scrap_data[:total_result],
       user_id:              scrap_data[:user_id]
     })
-    puts 'created search_result' + '*' * 100
-    puts search_result.inspect
-    search_result
   end
 end
