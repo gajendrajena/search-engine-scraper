@@ -24,6 +24,8 @@ module Scraper
 
   class EmptyKeywordError < StandardError; end
   class ExtractElementError < StandardError; end
+  class ParseError < StandardError; end
+  class ScrapeError < StandardError; end
 
   class UnSupportedError < StandardError
     attr_accessor :type
@@ -72,9 +74,9 @@ module Scraper
       SearchResult.create_from_scrap_data(scrap_data)
 
       scrap_data
-    rescue OutdatedError, UnSupportedError
+    rescue ParseError
       # log(ex) Log it to any service / third party library e.g. bugsnag
-      raise ExtractElementError
+      raise ScrapeError
     end
 
     def web_search
@@ -89,9 +91,9 @@ module Scraper
         end
         attrs[:html] = @page.to_html
       end
-    rescue OutdatedError, UnSupportedError
+    rescue ExtractElementError
       # log(ex) Log it to any service / third party library e.g. bugsnag
-      raise ExtractElementError
+      raise ParseError
     end
 
     # extract a specific data from html @page

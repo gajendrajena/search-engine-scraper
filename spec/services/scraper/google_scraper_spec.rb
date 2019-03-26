@@ -32,14 +32,14 @@ RSpec.describe Scraper, type: :service do
         expect{ Scraper::GoogleScraper.new.scrap }.to raise_error(Scraper::GoogleScraper::EmptyKeywordError)
       end
 
-      it 'scraps google with default keyword if option is empty' do
+      it 'scraps and throws error if keyword is empty' do
         expect{Scraper::GoogleScraper.new.scrap(keyword: '')}.to raise_error(Scraper::GoogleScraper::EmptyKeywordError)
       end
 
       it 'scraps google when invalid keyword is passed in option' do
         expect{
           Scraper::GoogleScraper.new.scrap({ keyword: 'lskdjfljsdlkfjsldkjflksdjf' })
-        }.to raise_error(Scraper::GoogleScraper::ExtractElementError)
+        }.to raise_error(Scraper::GoogleScraper::ScrapeError)
       end
     end
   end
