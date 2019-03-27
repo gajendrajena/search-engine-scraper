@@ -30,7 +30,7 @@ class SearchResult < ApplicationRecord
     search_result = where(" LOWER(keyword) like  LOWER('#{keyword}')")
 
     if search_result.blank?
-      GoogleScrapWorker.perform_async(keyword, user_id)
+      GoogleScrapeJob.perform_later({keyword: keyword, user_id: user_id})
       keywords_status[:parsed] << keyword
     else
       keywords_status[:buffered] << keyword

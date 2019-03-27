@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SearchResult, type: :model do
   let(:user) { FactoryBot.create(:user)}
-  before { allow(GoogleScrapWorker).to receive(:perform_async).and_return(true) }
+  before { allow(GoogleScrapeJob).to receive(:perform_later).and_return(true) }
 
   describe '.process_keywords_csv' do
 
