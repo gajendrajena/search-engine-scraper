@@ -26,6 +26,7 @@ module Scraper
   class ExtractElementError < StandardError; end
   class ParseError < StandardError; end
   class ScrapeError < StandardError; end
+  class InvalidArgumentError < StandardError; end
 
   class UnSupportedError < StandardError
     attr_accessor :type
