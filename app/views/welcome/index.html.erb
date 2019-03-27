@@ -22,7 +22,7 @@
         <div class="form-group">
           <div class="file btn btn-lg btn-primary form-control">
             Choose a csv file
-            <input type="file" name="file"/>
+            <%= file_field_tag :file, accept: 'text/csv' %>
           </div>
         </div>
         <div class="form-group">
