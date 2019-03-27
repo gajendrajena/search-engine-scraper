@@ -17,12 +17,22 @@ RSpec.describe ScraperController, type: :controller do
         allow(SearchResult).to receive(:process_keywords_csv).and_return(true)
       end
 
-      it 'allows user to scrap' do
-        expect(response.status).to eq(200)
-        post :scrap, params: { file: fixture_file_upload("/files/keywords.csv") }
+      context 'when attachment is present' do
+        it 'allows user to scrap' do
+          post :scrap, params: { file: fixture_file_upload("/files/keywords.csv") }
 
-        expect(response).to redirect_to('/')
-        expect(flash[:notice]).to eq('Uploaded successfully')
+          expect(response).to redirect_to('/')
+          expect(flash[:notice]).to eq('Uploaded successfully')
+        end
+      end
+
+      context 'when attachment is absent' do
+        it 'renders scrape form with error' do
+          post :scrap, params: {}
+
+          expect(response.status).to eq(200)
+          expect(flash[:error]).to eq('Please choose a file to upload')
+        end
       end
     end
   end
